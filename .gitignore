@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery.js" ></script>
+<script type="text/javascript">
+$(function(){
+	
+	$("#submit").click(function(){
+		//发送ajax请求
+		var city = $("#city").val();
+		$.post("getweather.php", {city:city}, function(data){
+			if(data.weatherinfo.city){
+				var city = data.weatherinfo.city;   //城市名称
+				var temp1 = data.weatherinfo.temp1;		//最高气温
+				var temp2 = data.weatherinfo.temp2;		//最低气温
+				var weather = data.weatherinfo.weather;		//天气描述（“晴到多云”）
+				alert(city+":"+weather+","+temp2+"-"+temp1);  
+				return;
+			}else{
+				alert("没找到该城市");
+			}
+		},"json");
+	});
+	
+});
+</script>
+
+<form method="post">
+	请输入城市：<input type="text" name="city" id="city" value="武汉" />
+	<input type="button" name="sub" id="submit" value="查看天气" />
+</form>
